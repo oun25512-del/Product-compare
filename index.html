@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CompareHub AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Kanit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class="hi">
+    <div class="logo" onclick="go('home')">Compare<span>Hub</span> <span class="ai-tag">AI</span></div>
+    <div class="sw"><span class="si">🔍</span><input type="text" id="si" placeholder="ค้นหาสินค้า..." oninput="rP()"></div>
+    <div class="ha">
+      <div class="nt">
+        <button class="ntb active" onclick="go('home',this)">🏠 หน้าหลัก</button>
+        <button class="ntb" onclick="go('upload',this)">📸 เพิ่มสินค้า</button>
+        <button class="ntb" onclick="go('wishlist',this)">❤️ โปรด</button>
+        <button class="ntb" onclick="go('history',this)">📊 ประวัติ</button>
+      </div>
+      <div class="cb" id="cb" onclick="oCM()">⚖️ เปรียบเทียบ <span class="bn" id="cn">0</span></div>
+    </div>
+  </div>
+</header>
+<div class="tc" id="tc"></div>
+<div class="main">
+
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <h1>เปรียบเทียบสินค้า <span>ฉลาด</span> กว่าเดิม</h1>
+      <p>เลือกสินค้าสูงสุด 4 รายการแล้วเปรียบเทียบทันที · อัปโหลดสินค้าของคุณเองแล้วให้ AI วิเคราะห์ ไม่ต้องเชื่อม API</p>
+    </div>
+    <div class="sc">
+      <div class="scd"><div class="sci">📦</div><div class="scv" id="sp">0</div><div class="scl">สินค้าทั้งหมด</div></div>
+      <div class="scd"><div class="sci">🏷️</div><div class="scv" id="sc2">0</div><div class="scl">หมวดหมู่</div></div>
+      <div class="scd"><div class="sci">❤️</div><div class="scv" id="sl">0</div><div class="scl">สินค้าโปรด</div></div>
+      <div class="scd"><div class="sci">⚖️</div><div class="scv" id="sc3">0</div><div class="scl">เปรียบเทียบแล้ว</div></div>
+    </div>
+    <div class="fb">
+      <span class="fl">กรอง:</span>
+      <button class="fbt active" onclick="sF('all',this)">ทั้งหมด</button>
+      <button class="fbt" onclick="sF('sale',this)">🔥 ลดราคา</button>
+      <button class="fbt" onclick="sF('new',this)">✨ ใหม่</button>
+      <button class="fbt" onclick="sF('top',this)">⭐ Rating สูง</button>
+      <button class="fbt" onclick="sF('mine',this)">🤖 สินค้าของฉัน</button>
+      <div class="pr">
+        <span style="font-size:12px;color:var(--t3)">ราคา:</span>
+        <input type="range" id="pr" min="0" max="150000" step="1000" value="150000" oninput="uP()">
+        <span class="pv" id="pv">ไม่จำกัด</span>
+      </div>
+    </div>
+    <div class="ct" id="ct"></div>
+    <div class="sh">
+      <div class="st" id="pc">สินค้าทั้งหมด</div>
+      <select class="ss" onchange="sm=this.value;rP()">
+        <option value="def">เรียงค่าเริ่มต้น</option>
+        <option value="pa">ราคา น้อย→มาก</option>
+        <option value="pd">ราคา มาก→น้อย</option>
+        <option value="rt">Rating สูงสุด</option>
+        <option value="dc">ส่วนลดสูงสุด</option>
+      </select>
+    </div>
+    <div class="pg" id="pg"></div>
+  </div>
+
+  <!-- UPLOAD PAGE -->
+  <div class="page" id="page-upload">
+    <div style="margin-bottom:22px">
+      <h1 style="font-family:'Kanit',sans-serif;font-size:26px;font-weight:800;margin-bottom:6px">
+        📸 เพิ่มสินค้าของคุณ <span style="background:linear-gradient(135deg,var(--ac),var(--ac3));-webkit-background-clip:text;-webkit-text-fill-color:transparent">+ AI วิเคราะห์</span>
+      </h1>
+      <p style="color:var(--t2);font-size:14px">วิเคราะห์ด้วย AI ในเครื่อง ไม่ต้องเชื่อม API ไม่ต้องมี Key ใดๆ</p>
+    </div>
+    <div class="local-ai-notice">
+      <span style="font-size:20px;flex-shrink:0">🧠</span>
+      <div><strong>Local AI Engine</strong> — ระบบวิเคราะห์ทำงานในเบราว์เซอร์ของคุณทั้งหมด วิเคราะห์จากรูป (สี พื้นผิว ความสว่าง) + ชื่อสินค้า + แบรนด์ + หมวดหมู่ + ราคา เพื่อสร้างสเปก คะแนน และคำอธิบายอัตโนมัติ ไม่มีข้อมูลออกไปนอกเครื่อง</div>
+    </div>
+    <div class="step-badges">
+      <div class="step-badge"><span>1</span> อัปโหลดรูปสินค้า</div>
+      <div class="step-badge"><span>2</span> กรอกข้อมูลพื้นฐาน</div>
+      <div class="step-badge"><span>3</span> กด "วิเคราะห์ด้วย AI"</div>
+      <div class="step-badge"><span>4</span> เพิ่มสินค้าในระบบ</div>
+    </div>
+
+    <div class="up-wrap">
+      <!-- LEFT -->
+      <div class="up-left">
+        <div class="up-title">🖼️ รูปสินค้า</div>
+        <div id="dropZone" class="drop-zone" ondragover="onDrag(event,true)" ondragleave="onDrag(event,false)" ondrop="onDrop(event)">
+          <input type="file" id="imgFile" accept="image/*" onchange="onFile(this)">
+          <div class="drop-icon">📷</div>
+          <div class="drop-text">คลิกหรือลากรูปมาวางที่นี่</div>
+          <div class="drop-sub">JPG, PNG, WEBP · ขนาดสูงสุด 20MB</div>
+        </div>
+        <div id="imgPreviewWrap" style="display:none;margin-top:12px">
+          <div class="img-preview">
+            <img id="imgPreview" src="" alt="preview">
+            <div class="img-remove" onclick="removeImg()">✕</div>
+          </div>
+          <div class="img-hint">✓ AI จะวิเคราะห์สีและลักษณะของรูปด้วย</div>
+          <div id="swatchWrap" class="color-swatches" style="margin-top:8px"></div>
+        </div>
+        <canvas id="cvs" style="display:none"></canvas>
+
+        <div style="margin-top:20px">
+          <div class="up-title">📝 ข้อมูลพื้นฐาน</div>
+          <div class="form-group">
+            <label class="form-label">ชื่อสินค้า *</label>
+            <input class="form-input" id="fName" placeholder="เช่น Nike Air Max 90, iPhone 15..." oninput="checkBtn()">
+          </div>
+          <div class="form-row">
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label">แบรนด์</label>
+              <input class="form-input" id="fBrand" placeholder="Nike, Apple, Samsung...">
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label">หมวดหมู่</label>
+              <input class="form-input" id="fCat" placeholder="รองเท้า, สมาร์ทโฟน...">
+            </div>
+          </div>
+          <div style="margin-top:14px"></div>
+          <div class="form-row">
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label">ราคาขาย (฿) *</label>
+              <input class="form-input" id="fPrice" type="number" placeholder="0" oninput="checkBtn()">
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label">ราคาเดิม (฿)</label>
+              <input class="form-input" id="fOPrice" type="number" placeholder="ถ้าไม่มีส่วนลดเว้นว่าง">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: AI Result -->
+      <div class="up-right">
+        <div class="up-title">🤖 ผลการวิเคราะห์</div>
+        <div class="ai-badge">🧠 Local AI Engine · ไม่ต้องเชื่อม API</div>
+
+        <button class="ai-btn" id="aiBtn" onclick="analyzeLocal()" disabled>
+          ✨ วิเคราะห์ด้วย AI
+        </button>
+
+        <!-- Processing -->
+        <div class="ai-processing" id="aiProc">
+          <div style="font-size:32px;margin-bottom:8px">🔬</div>
+          <div class="ai-step-text ai-step-dots" id="aiStepTxt">กำลังวิเคราะห์รูปภาพ</div>
+          <div class="ai-processing-bar"><div class="ai-processing-fill" id="aiBar"></div></div>
+          <div style="font-size:11px;color:var(--t3);margin-top:4px">ทำงานในเบราว์เซอร์ ข้อมูลไม่ออกนอกเครื่อง</div>
+        </div>
+
+        <!-- Result -->
+        <div class="ai-result" id="aiResult">
+          <div class="ai-result-title">✨ ผลการวิเคราะห์</div>
+
+          <div style="margin-bottom:14px">
+            <div class="form-label" style="margin-bottom:6px">📝 คำอธิบายสินค้า</div>
+            <div id="aiDesc" style="font-size:13px;color:var(--t2);line-height:1.75;background:var(--s);border-radius:8px;padding:10px"></div>
+          </div>
+
+          <div style="margin-bottom:14px">
+            <div class="form-label" style="margin-bottom:6px">🏷️ Tags</div>
+            <div id="aiTags"></div>
+          </div>
+
+          <div style="margin-bottom:14px">
+            <div class="form-label" style="margin-bottom:8px">📊 คะแนนด้านต่างๆ</div>
+            <div id="aiScores"></div>
+          </div>
+
+          <div style="margin-bottom:4px">
+            <div class="form-label" style="margin-bottom:8px">⚙️ สเปคโดยประมาณ</div>
+            <div id="aiSpecs" style="background:var(--s);border-radius:8px;padding:10px"></div>
+          </div>
+
+          <div id="imgColorSection" style="display:none;margin-top:12px">
+            <div class="form-label" style="margin-bottom:6px">🎨 โทนสีจากรูป</div>
+            <div id="aiColors" class="color-swatches"></div>
+          </div>
+        </div>
+
+        <button class="add-btn" id="addBtn" onclick="addProduct()">✅ เพิ่มสินค้าในระบบ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WISHLIST -->
+  <div class="page" id="page-wishlist">
+    <div style="font-family:'Kanit',sans-serif;font-size:24px;font-weight:800;margin-bottom:18px">❤️ สินค้าโปรดของฉัน</div>
+    <div class="pg" id="wg"></div>
+    <div id="we" class="es" style="display:none"><div class="ei">💔</div><div class="et">ยังไม่มีสินค้าโปรด</div><p>กดไอคอน ❤️ บนการ์ดสินค้าเพื่อเพิ่ม</p></div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="page" id="page-history">
+    <div style="font-family:'Kanit',sans-serif;font-size:24px;font-weight:800;margin-bottom:18px">📊 ประวัติการเปรียบเทียบ</div>
+    <div id="hl"></div>
+    <div id="he" class="es" style="display:none"><div class="ei">📭</div><div class="et">ยังไม่มีประวัติ</div><p>เริ่มเปรียบเทียบสินค้าเพื่อดูประวัติที่นี่</p></div>
+  </div>
+</div>
+
+<!-- Compare Bar -->
+<div class="cp" id="cp">
+  <div class="cpi">
+    <div class="cpt">⚖️ เปรียบเทียบ</div>
+    <div class="cil" id="cil"></div>
+    <div style="display:flex;gap:8px">
+      <button class="bo" onclick="clrC()">ล้าง</button>
+      <button class="bp" onclick="oCM()">เปรียบเทียบ →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modals -->
+<div class="mo" id="cmo"><div class="md"><div class="mh"><div class="mt">⚖️ ตารางเปรียบเทียบสินค้า</div><div class="mc" onclick="cCM()">✕</div></div><div class="ctw" id="ctw"></div></div></div>
+<div class="mo" id="dmo"><div class="dmd"><div class="mh"><div class="mt" id="dt">รายละเอียด</div><div class="mc" onclick="cDM()">✕</div></div><div class="db" id="db"></div></div></div>
+<script src="script.js"></script>
+</body>
+</html>
